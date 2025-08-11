@@ -240,6 +240,18 @@ class ZhipuVision(Plugin):
         
         # For other models, proceed with Base64 processing
         try:
+            # Progress notification for uploaded image processing
+            action_desc_map = {
+                "image": "图片识别",
+                "reverse": "提示词反推",
+                "i2v": "运镜提示词生成",
+                "vfx": "特效提示词生成",
+                "storyboard": "分镜生成",
+            }
+            progress_desc = action_desc_map.get(action_type_key, "图片处理")
+            progress_msg = f"正在使用 {current_model} 进行{progress_desc}，请稍候..."
+            e_context["channel"].send(Reply(ReplyType.INFO, progress_msg), e_context["context"])
+
             processed_pure_base64_data = self._process_image(image_content_input, msg=context.kwargs.get('msg'))
             
             api_messages_payload = [
@@ -340,6 +352,18 @@ class ZhipuVision(Plugin):
                 
                 # For other models, proceed with Base64 processing for referenced image
                 try:
+                    # Progress notification for referenced image processing
+                    prompt_desc_map = {
+                        "image_prompt": "图片识别",
+                        "reverse_prompt": "提示词反推",
+                        "i2v_prompt": "运镜提示词生成",
+                        "vfx_prompt": "特效提示词生成",
+                        "storyboard_prompt": "分镜生成",
+                    }
+                    progress_desc = prompt_desc_map.get(action_prompt_key, "图片处理")
+                    progress_msg = f"正在使用 {current_model_for_ref} 进行{progress_desc}，请稍候..."
+                    e_context["channel"].send(Reply(ReplyType.INFO, progress_msg), e_context["context"])
+
                     logger.info(f"[ZhipuVision] Processing referenced image for {action_prompt_key} by {user_id}. Path: {actual_msg_object.referenced_image_path}")
                     processed_pure_base64_data = self._process_image(actual_msg_object.referenced_image_path, msg=actual_msg_object)
                     
@@ -449,6 +473,19 @@ class ZhipuVision(Plugin):
                     if extracted_url:
                         logger.info(f"[ZhipuVision] Processing direct URL for {command_type_key} by {user_id}: {extracted_url}")
                         try:
+                            # Progress notification for direct URL image processing
+                            current_model = self.config.get("api", {}).get("model")
+                            type_desc_map = {
+                                "image_analysis": "图片识别",
+                                "reverse_keyword": "提示词反推",
+                                "i2v_keyword": "运镜提示词生成",
+                                "vfx_keyword": "特效提示词生成",
+                                "storyboard_keyword": "分镜生成",
+                            }
+                            progress_desc = type_desc_map.get(command_type_key, "图片处理")
+                            progress_msg = f"正在使用 {current_model} 进行{progress_desc}，请稍候..."
+                            e_context["channel"].send(Reply(ReplyType.INFO, progress_msg), e_context["context"])
+
                             # For direct URL, image_url object first, then text object
                             api_messages_payload = [
                                 {
@@ -515,6 +552,11 @@ class ZhipuVision(Plugin):
                     
                     logger.info(f"[ZhipuVision] Processing video URL by {user_id}: {extracted_url}")
                     try:
+                        # Progress notification for video processing
+                        current_model = self.config.get("api", {}).get("model")
+                        progress_msg = f"正在使用 {current_model} 进行视频分析，请稍候..."
+                        e_context["channel"].send(Reply(ReplyType.INFO, progress_msg), e_context["context"])
+
                         api_messages_payload = [
                             {
                                 "role": "user",
