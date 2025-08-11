@@ -1,0 +1,38 @@
+{
+    "api": {
+        "base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "model": "glm-4.5v",
+        "timeout": 180,
+        "key": "",
+        "temperature": 0.8
+    },
+    "image": {
+        "max_size": 10,
+        "max_pixels": 4096
+    },
+    "video": {
+        "max_size": 20,
+        "max_duration": 60
+    },
+    "trigger_keywords": {
+        "image_analysis": ["z识图", "看看这张图"],
+        "reverse_keyword": ["z反推"],
+        "storyboard_keyword": ["z分镜"],
+        "i2v_keyword": ["z运镜"],
+        "vfx_keyword": ["z特效"],
+        "video_analysis": ["z视频", "看看这个视频"]
+    },
+    "prompts": {
+        "image_prompt": "请仔细观察这张图片的内容，然后用简洁明了的中文回答用户的问题。如用户没有提出额外问题，则简单描述图片中的主体、场景、风格、颜色等关键要素。如果图片包含文字，也请提取出来。",
+        "reverse_prompt": "请详细分析这张图片的内容，包括主要对象、场景、风格、颜色等关键特征，并将其转化为高质量的提示词，以便用户能够在AI绘画模型中复现类似效果。如果图片包含文字，也请提取出来。输出内容分为两部分:1. **中文版图片描述**：以“🎨中文提示词 ”开头，结构化的完整中文句子，字数控制在300个汉字以内;2. **英文版图片描述**：以“✨Image Prompt”开头，内容与中文版对应，字数控制在150个单词以内。输出示例如下： **🎨中文提示词**\n 一张极具视觉冲击力的宣传海报，主体为书法风格的白色中文字体“今天中大奖”，文字采用粗犷的笔触，墨迹飞溅，极具力量感。背景为纯黑色，点缀着零星的红色斑点，营造出一种热烈而神秘的氛围。海报整体风格偏向国风，带有浓厚的文化气息，同时又兼具现代设计的简洁与大气。字体右上方有一红色印章，增添了传统韵味。整体画面对比鲜明，主题突出，引人注目。\n\n **✨Image Prompt**\n A visually striking promotional poster featuring bold, white Chinese calligraphy characters '今天中大奖' (Today Win the Grand Prize). The characters are rendered with rough brushstrokes and splattered ink, conveying a sense of strength. The background is pure black, dotted with scattered red specks, creating a passionate and mysterious atmosphere. The overall style leans towards Chinese traditional aesthetics (Guofeng), carrying a strong cultural flavor while also incorporating the simplicity and grandeur of modern design. A red seal is placed in the upper right corner of the characters, adding a traditional touch. The overall image is highly contrasting, with a prominent theme that captures attention.",
+        "video_prompt": "为我详细且专业的描述这个视频，并对里面的特殊运镜方式和动效做出分析。",
+        "ask_for_image": "请发送图片。",
+        "ask_for_video_url": "请提供媒体文件的URL链接。",
+        "image_process_fail": "图片处理失败，请检查图片格式或稍后再试。",
+        "video_process_fail": "视频处理失败，请检查视频URL或稍后再试。",
+        "api_error": "抱歉，AI服务暂时出现问题，请稍后再试。",
+        "timeout_reply": "操作超时，请重新发送指令。",
+        "cancel_reply": "操作已取消。"
+    },
+    "wait_timeout": 180
+}
